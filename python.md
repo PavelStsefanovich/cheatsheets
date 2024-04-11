@@ -3,6 +3,12 @@
 > This guide assumes Ubuntu 20.04 as host OS
 
 ```bash
+# check default Python version
+python3 --version
+
+# upgrade default pip installation
+python3 -m pip install --upgrade pip
+
 # configure and update package manager
 sudo apt update && sudo apt upgrade -y
 sudo apt install software-properties-common
