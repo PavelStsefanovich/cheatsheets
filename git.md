@@ -14,6 +14,7 @@ git config --list
 ```
 
 ## Revert changes
+
 ```bash
 # revert the workspace to the last commit
 git reset --hard HEAD
@@ -25,4 +26,12 @@ git reset --hard <some_commit>
 # to add a note of the reset operation to the history:
 git reset --soft HEAD@{1}
 git commit -m "Reverting to the state at commit f414f31"
+```
+
+## Merge branches with unrelated history
+
+```bash
+git pull <unrelated_branch> --allow-unrelated-histories
+# this may result in the merge conflicts; resolve them, commit and push to update remote
+git push origin <your_branch>
 ```
