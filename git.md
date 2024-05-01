@@ -39,6 +39,21 @@ git push origin <your_branch>
 ## Tags operations
 
 ```bash
+# pull latest tags
+git pull --tags
+
 # list tags with dates
 git log --tags --simplify-by-decoration --pretty="format:%ci %d"
+
+# compare tags
+git diff tag1 tag2
+
+# show log between tags
+git log tag1..tag2
+
+# show only list of changed files
+git diff tag1 tag2 --stat
+
+# show diff for a particular file
+git diff tag1 tag2 -- some/file/name
 ```
