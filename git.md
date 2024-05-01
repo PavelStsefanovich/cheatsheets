@@ -35,3 +35,10 @@ git pull <unrelated_branch> --allow-unrelated-histories
 # this may result in the merge conflicts; resolve them, commit and push to update remote
 git push origin <your_branch>
 ```
+
+## Tags operations
+
+```bash
+# list tags with dates
+git log --tags --simplify-by-decoration --pretty="format:%ci %d"
+```
