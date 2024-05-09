@@ -4,12 +4,14 @@
 ## Install WSL v2
 
 ### Windows 10 version 2004+ (build 19041+)
+
 ```powershell
     wsl --install
 ```
 
 ### Older Windows versions
 1. Enable WSL Feature:
+
 ```powershell
     # cmd
     dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
@@ -24,6 +26,7 @@
 3. Restart computer to apply changes.
 
 4. Configure WSL2 to be used by default:
+
 ```powershell
     wsl --set-default-version 2
 ```
@@ -31,6 +34,7 @@
 ## Install First WSL Distribution
 
 1. Download and install Ubuntu distro:
+
 ```powershell
     # define the installation directory (no need to create directory beforehand)
     $install_directory = "D:\your\dir" # can be any drive/path
@@ -53,11 +57,13 @@
 2. Follow the prompts inside the WSL terminal window to create admin user/password. These are not related to your Windows account username/passord and can be anything.
 
 3. Add your admin user to the sudoers (inside the WSL terminal window):
+
 ```bash
     sudo usermod -aG sudo <username>
 ```
 
 4. Exit WSL terminal window and restart WSL:
+
 ```powershell
     wsl --shutdown
 ```
@@ -67,6 +73,7 @@
 1. Find the distribution of your choice on the [Ubuntu Cloud Images](http://cloud-images.ubuntu.com/) repository.
 
 2. Download, Import and Start the new distribution:
+
 ```powershell
     # download
     $wc = [System.Net.WebClient]::new()
@@ -78,6 +85,7 @@
 ```
 
 3. Create admin user, add it to sudoers and make it a default login (inside the WSL terminal window):
+
 ```bash
     # do this first
     adminuser="<username>"
@@ -92,12 +100,14 @@
 ```
 
 4. Exit WSL terminal window and restart WSL distribution:
+
 ```powershell
     wsl -t <new_distro_name>
 ```
 
 
 ## WSL Initial Config
+
 ```bash
     # update package manager and upgrade installed packages
     sudo apt update -y && sudo apt upgrade -y
@@ -107,6 +117,12 @@
 ```
 
 ## Initial Backup
+
 ```powershell
     wsl --export "<new_distro_name>-clean" <path_to_backup_tar_file>
 ```
+
+## Tips & Tricks
+
+TOD: Shrink WSL distro size:
+https://stephenreescarter.net/how-to-shrink-a-wsl2-virtual-disk/
