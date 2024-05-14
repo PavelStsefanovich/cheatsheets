@@ -26,6 +26,7 @@ git reset --hard <some_commit>
 # to add a note of the reset operation to the history:
 git reset --soft HEAD@{1}
 git commit -m "Reverting to the state at commit <some_commit>"
+git push -f
 ```
 
 ## Merge branches with unrelated history
