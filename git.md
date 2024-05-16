@@ -13,6 +13,16 @@ git config --global user.email "youremail@yourdomain.com"
 git config --list
 ```
 
+## Origin operations
+
+```bash
+# show only remote URL
+git config --get remote.origin.url
+
+# show full origin configuration
+git remote show origin
+```
+
 ## Revert changes
 
 ```bash
