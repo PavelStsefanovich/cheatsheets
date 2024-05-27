@@ -124,5 +124,36 @@
 
 ## Tips & Tricks
 
-TOD: Shrink WSL distro size:
-https://stephenreescarter.net/how-to-shrink-a-wsl2-virtual-disk/
+### Shrink WSL distro size:
+> Distro size grows when new files are copied or downloaded into it,
+> but it does not automatically shrink when files are deleted.
+> To manually compact the size of the distro's virtual disk, follow these steps
+
+```powershell
+    # list available distros
+    wsl --list --verbose
+    $distro_name = <distro_name>
+
+    # stop the distro that you want to shrik
+    wsl --terminate $distro_name
+
+    # get the path of the distro's VHD
+    $distro = Get-ChildItem "HKCU:\Software\Microsoft\Windows\CurrentVersion\Lxss" -Recurse | ? { try { ($_ | Get-ItemProperty -Name DistributionName).DistributionName -eq "$distro_name" } catch {} }
+    $distro_dir = ($distro | Get-ItemProperty -Name BasePath).Basepath -replace '^\W+',''
+    $vhdx_path = Get-Item "$distro_dir\*.vhdx"
+    write-host "$vhdx_path  <-- use this in with diskpart.exe" -foregroundcolor green
+
+    # to get the curret size of VHD
+    $distro_size = "{0:N0} MB" -f ((Get-ChildItem -Recurse -LiteralPath "$distro_dir" | Measure-Object -Property Length -sum).sum / 1Mb)
+    write "Current size: $distro_size"
+
+    # start diskpart.exe utility (will prompt for admin credentials)
+    diskpart
+```
+Continue in DiskPart.exe
+```batch
+    select vdisk file=<vhdx_path>
+    attach vdisk readonly
+    compact vdisk
+    detach vdisk
+```
