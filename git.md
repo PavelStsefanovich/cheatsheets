@@ -68,3 +68,39 @@ git diff tag1 tag2 --stat
 # show diff for a particular file
 git diff tag1 tag2 -- some/file/name
 ```
+
+## Submodules
+A Git repository may include reference to another repository using [Git Submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
+
+```bash
+# clone parent and simultaneously initialize submodlue repo
+git clone --recurse-submodules https://github.com/parent_repo.git
+
+# if cloned as usual, initialize submodule repo later
+cd <parent_repo_root_dir>
+git submodule update --init --recursive
+
+# Submodule repository reference always points to the specific commit SHA.
+# To change the commit that you want to point to, run the following command
+# while replacing <commit_sha> and <submodule_repo_dir_name> with correct value:
+cd <parent_repo_root_dir>
+git update-index --cacheinfo 160000,<commit_sha>,<submodule_repo_dir_name>
+
+# to make this change permanent for everyone, commit and push to remote origin.
+```
+
+> NOTE: Visual Studio Code manages index update automatically.
+
+
+### Troubleshooting
+Regardless of the way Git index is updated (VS Code or manually), it may result in the "detached HEAD" state in the submodule repository.
+In order to merge your local changes back into the branch that submodule originally pointed to, do the following:
+
+```bash
+cd <submodule_repo_dir>
+git branch tmp
+git checkout <original_submodule_branch>
+git merge tmp
+git push
+git branch -d tmp
+```
