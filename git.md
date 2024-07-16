@@ -2,6 +2,7 @@
 
 > This guide assumes Ubuntu 20.04 as host OS
 
+
 ## Initial Git config
 
 ```bash
@@ -12,6 +13,7 @@ git config --global user.email "youremail@yourdomain.com"
 # verify global config
 git config --list
 ```
+
 
 ## Origin operations
 
@@ -39,6 +41,7 @@ git commit -m "Reverting to the state at commit <some_commit>"
 git push -f
 ```
 
+
 ## Merge branches with unrelated history
 
 ```bash
@@ -46,6 +49,7 @@ git pull <unrelated_branch> --allow-unrelated-histories
 # this may result in the merge conflicts; resolve them, commit and push to update remote
 git push origin <your_branch>
 ```
+
 
 ## Tags operations
 
@@ -68,6 +72,7 @@ git diff tag1 tag2 --stat
 # show diff for a particular file
 git diff tag1 tag2 -- some/file/name
 ```
+
 
 ## Submodules
 A Git repository may include reference to another repository using [Git Submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
@@ -103,4 +108,12 @@ git checkout <original_submodule_branch>
 git merge tmp
 git push
 git branch -d tmp
+```
+
+
+## MacOS Notes
+
+```bash
+# use keychain to cache Git secret (https://medium.com/codex/git-credentials-on-macos-caching-updating-and-deleting-your-git-credentials-8d22b6126533)
+git config --global credential.helper osxkeychain
 ```
