@@ -6,16 +6,51 @@
 ## Initial Git config
 
 ```bash
-# set your global commit name and email address
+# minimum config
 git config --global user.name "Your Name"
 git config --global user.email "youremail@yourdomain.com"
+
+# additional config
+git config --global init.defaultBranch main
+git config --global core.editor "'C:/Program Files/Notepad++/notepad++.exe' -multiInst -nosession"
+git config --global merge.tool p4merge
+git config --global mergetool.p4merge.path "C:/Program Files/Perforce/p4merge.exe"
+git config --global diff.tool p4merge
+git config --global difftool.p4merge.path "C:/Program Files/Perforce/p4merge.exe"
+git config --global alias.hist "log --all --graph --decorate --oneline"
+
+# credentials (Windows)
+git config --global credential.helper wincred
+
+# credentials (WSL)
+git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/libexec/git-core/git-credential-wincred.exe"
 
 # verify global config
 git config --list
 ```
 
+## New Git repo
+```bash
+# Create a new repository on remote hosting (GitHub/GitLab/etc.).
+# To avoid errors, do not initialize the new repository with README, license, or gitignore files.
 
-## Origin operations
+# initialize the local directory as a Git repository.
+git init --initial-branch=main
+
+# add the files, stage them commit
+git add .
+git commit -m "First commit"
+
+# add the remote repository URL
+git remote add origin <remote_repo_url>
+git remote -v # this verifies the new remote URL
+
+# push local repo to remote
+git push origin main
+```
+
+
+## Remote operations
 
 ```bash
 # show only remote URL
@@ -23,6 +58,17 @@ git config --get remote.origin.url
 
 # show full origin configuration
 git remote show origin
+
+# add remote
+git remote add <remote> <url>.git
+
+# push local branch/tags to specific remote
+git push -u <remote> <local_branch>
+git push -u <remote> --all
+git push -u <remote> --tags
+
+# set specifi remote to track local branch
+git branch --set-upstream <local_branch> <remote>/<remote_branch>
 ```
 
 ## Revert changes
