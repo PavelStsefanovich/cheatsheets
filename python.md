@@ -26,6 +26,9 @@ sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 3
 sudo update-alternatives --config python3 # choose the current default version
 python3 --version # confirm selection
 
+# install Python Dev Tools
+sudo apt install jq unzip python3-dev libkrb5-dev python3.10 python3.10-dev python3.10-venv
+
 # install latest Pip for your default Python version
 curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
 python3 -m pip --version
