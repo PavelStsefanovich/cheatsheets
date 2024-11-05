@@ -33,3 +33,35 @@ aws s3api list-object-versions \
    done
 done
 ```
+
+
+### Disable bucket Lifecycle Configuration and Versioning
+
+1. Create `lifecycle.json` file:
+
+```json
+{
+    "Rules": [
+        {
+            "ID": "delete",
+            "Prefix": "",
+            "Status": "Disabled",
+            "NoncurrentVersionExpiration": {
+                "NoncurrentDays": 1
+            }
+        }
+    ]
+}
+```
+
+2. Apply Lifecycle configuration:
+
+```bash
+aws s3api put-bucket-lifecycle-configuration --bucket <bucket_name> --lifecycle-configuration file://lifecycle.json
+```
+
+3. After 1 day delete bucket:
+
+```bash
+aws s3api delete-bucket --bucket <bucket_name>
+```
