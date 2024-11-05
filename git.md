@@ -60,6 +60,15 @@ git pull --tags
 # list tags with dates
 git log --tags --simplify-by-decoration --pretty="format:%ci %d"
 
+# list gags with commit hashes
+git show-ref --tags
+
+# show hash for single tag
+git show-ref {tag_name}
+
+# show details of the commit hash
+git show {commit_sha}
+
 # compare tags
 git diff tag1 tag2
 
