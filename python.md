@@ -32,7 +32,23 @@ sudo apt install jq unzip python3-dev libkrb5-dev python3.10 python3.10-dev pyth
 # install latest Pip for your default Python version
 curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
 python3 -m pip --version
+```
 
+# Virtual Environment
+
+## Venv
+
+```bash
+# create a new virtual environment
+python -m venv .venv
+
+# activate virtual environment
+.\.venv\Scripts\activate
+```
+
+## PipEnv
+
+```bash
 # install Pipenv
 python3 -m pip install pipenv
 alias pipenv="python3 -m pipenv"
