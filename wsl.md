@@ -105,6 +105,32 @@
     wsl -t <new_distro_name>
 ```
 
+## Install Using WSL --install Command (Wndows 11)
+
+1. Install the distribution of your choice from those optimized and hosted by Microsoft
+
+```powershell
+    # list available distibutions
+    wsl --list --online
+
+    # install distribution
+    wsl --install <distro_name> --web-download
+```
+
+2. Follow the prompts inside the WSL terminal window to create admin user/password. These are not related to your Windows account username/passord and can be anything.
+
+3. Add your admin user to the sudoers (inside the WSL terminal window):
+
+```bash
+    sudo usermod -aG sudo <username>
+```
+
+4. Exit WSL terminal window and restart WSL:
+
+```powershell
+    wsl --shutdown
+```
+
 
 ## WSL Initial Config
 
