@@ -140,6 +140,8 @@
 
     # remove the message of the day (known as MOTD)
     touch ~/.hushlogin
+
+    # update ~/.bashrc or ~/.profile --> refer to "bash.md" file for details
 ```
 
 ## Initial Backup
