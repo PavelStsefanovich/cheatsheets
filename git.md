@@ -23,7 +23,10 @@ git config --global alias.hist "log --all --graph --decorate --oneline"
 git config --global credential.helper wincred
 
 # credentials (WSL)
-git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/libexec/git-core/git-credential-wincred.exe"
+git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager.exe"
+# older version of Git:
+# git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/libexec/git-core/git-credential-wincred.exe"
+# Microsoft Docs: https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-git
 
 # verify global config
 git config --list
