@@ -43,7 +43,7 @@ python3 -m pip --version
 python -m venv .venv
 
 # activate virtual environment
-.\.venv\Scripts\activate
+./.venv/Scripts/activate
 ```
 
 ## PipEnv
