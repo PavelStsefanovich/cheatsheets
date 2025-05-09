@@ -175,3 +175,6 @@ git branch -d tmp
 # use keychain to cache Git secret (https://medium.com/codex/git-credentials-on-macos-caching-updating-and-deleting-your-git-credentials-8d22b6126533)
 git config --global credential.helper osxkeychain
 ```
+
+## Links
+- [10 Secret Git Commands](https://dev.to/arpitstack/10-secret-git-commands-that-will-save-you-5-hours-every-week-1mpn)
