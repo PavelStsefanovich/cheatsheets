@@ -1,21 +1,41 @@
 # Important Tools, Technologies, Methodologies, Terminology and Web Resources
 
-# Tools
+## Tools
 - gradio
 - langchain
 
 
-# Technologies
+## Technologies
 - Vector Databases
 
 
-# Methodologies
+## Methodologies
 - RAG
 
 
-# Terminology
+## Terminology
 - Vector Embeddings
 
 
-# Web Resources
-- Google Collab
+## Web Resources
+
+### Developer Resources For Frontier LLMs
+- [OpenAI](https://paltform.openai.com)
+
+### Models
+- [Hugging Face](https://huggingface.co/models)
+
+### Training
+- [Weights And Biases](https://wandb.ai)
+
+### Compute
+- [Google Collab](https://colab.google/)
+- [Modal](https://modal.com/)
+
+### Datasets
+- [Kaggle](https://www.kaggle.com/)
+- [Hugging Face](https://huggingface.co/datasets)
+- [Scale](https://scale.com/) -> Commercial
+
+### Miscellaneous
+- [PushOver](https://pushover.net)
