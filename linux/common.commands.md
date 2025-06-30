@@ -1,8 +1,3 @@
-# Linux commands and configurations
-
-> This guide assumes Ubuntu 20.04 as host OS
-
-
 # Essential Linux Commands for DevOps
 
 Curated list of 70 essential Linux commands for DevOps, categorized and explained for practical use:
@@ -112,3 +107,28 @@ Additional commands to streamline your workflow:
 - `sort`: Arranges lines in order.
 - `tr`: Translates or deletes characters.
 - `paste`: Combines lines of files.
+
+
+## Apropos
+The apropos command will help you find a command by matching your search term with command descriptions found in the man pages. You might just run across some commands that you didn’t realize were available.
+
+```bash
+$ apropos find
+fdupes (1)           - finds duplicate files in a given set of directories
+ffs (3)              - find first bit set in a word
+ffsl (3)             - find first bit set in a word
+ffsll (3)            - find first bit set in a word
+find (1)             - search for files in a directory hierarchy
+findfs (8)           - find a filesystem by label or UUID
+findmnt (8)          - find a filesystem
+findrule (1p)        - command line wrapper to File::Find::Rule
+glob (3)             - find pathnames matching a pattern, free memory from glob()
+globfree (3)         - find pathnames matching a pattern, free memory from glob()
+gst-typefind-1.0 (1) - print Media type of file
+ippfind (1)          - find internet printing protocol printers
+jdb (1)              - Finds and fixes bugs in Java platform programs.
+lfind (3)            - linear search of an array
+locate (1)           - find files by name
+mlocate (1)          - find files by name
+…
+```
