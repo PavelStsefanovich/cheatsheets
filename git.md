@@ -132,6 +132,18 @@ git diff tag1 tag2 -- some/file/name
 ```
 
 
+## Update Local Workspace After Main Branch Rename On Remote
+Assuming old default branch was `main` and new one is `v1`
+
+```bash
+git branch -m main v1
+git fetch origin
+git branch -u origin/v1 v1
+git remote set-head origin -a 
+```
+
+
+
 ## Submodules
 A Git repository may include reference to another repository using [Git Submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
 
