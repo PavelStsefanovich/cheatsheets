@@ -229,6 +229,25 @@ x := 5
 increment(&x)  // x is now 6
 ```
 
+#### Pointers vs Vars
+```go
+// var — Value
+// Use when working with the value itself.
+x := 10
+fmt.Println(x) // prints 10
+
+// &var — Address of Value
+// Use when you need a pointer to a variable (i.e., its memory address).
+p := &x       // p is *int, holds address of x
+fmt.Println(p)  // prints something like 0xc00001a0a8
+
+// *var — Dereference Pointer
+// Use when you have a pointer and want to access the value it points to.
+fmt.Println(*p) // prints 10 (value at address p)
+*p = 20         // changes x to 20
+```
+
+
 ### Maps & Slices
 ```go
 // Maps (like Python dicts)
