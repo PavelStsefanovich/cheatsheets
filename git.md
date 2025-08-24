@@ -132,6 +132,45 @@ git diff tag1 tag2 -- some/file/name
 ```
 
 
+## Find Bad Commit With Git Bisect
+> Git Bisect is a powerful tool in Git that helps you identify the specific commit that introduced a bug or an issue in your codebase. It uses a binary search algorithm to efficiently narrow down the range of commits to find the problematic one.
+
+> To start using Git Bisect, you need to provide two pieces of information:
+> 1. A commit where the code is known to be good.
+> 2. A commit where the bug is present.
+> 
+> Git Bisect will then split the range of commits between the "good" and "bad" commits in half and check out a commit in the middle. You need to test this commit and inform Git whether it is "good" or "bad". Git will continue this process, narrowing down the range until it identifies the exact commit that introduced the bug.
+
+```bash
+# Start the Bisect Process
+git bisect start
+
+# Mark the Bad Commit (specify the point of time where bug exists; HEAD - is current head)
+git bisect bad HEAD
+
+# Mark the Good Commit (specify the point of time where bug is not yet present)
+git bisect good <commit-hash> # alternatively, use tag instead of commit hash
+
+# Git automatically switches to commit in the middle between good and bad.
+# Test the source, virify if bug is present.
+# if the bug is still present:
+git bisect bad
+# or, if the bug is not present:
+git bisect good
+# or, if commit cannot be tested (e.g. cannot compile, cannot verify):
+git bisect skip
+# Git will continue this process until it identifies the commit that introduced the bug.
+# Eventually Git will report "<bad-commit-hash> is the first bad commit"
+
+# Stop the Bisect Process and Return to original branch
+git bisect reset
+
+# (Automation)
+# You can automate the bisect process using a script:
+git bisect run <script>
+```
+
+
 ## Update Local Workspace After Main Branch Rename On Remote
 Assuming old default branch was `main` and new one is `v1`
 
@@ -141,7 +180,6 @@ git fetch origin
 git branch -u origin/v1 v1
 git remote set-head origin -a 
 ```
-
 
 
 ## Submodules
