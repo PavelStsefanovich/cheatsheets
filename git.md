@@ -1,9 +1,9 @@
-# Git configuration and advanced usage
+# GIT CONFIGURATION AND ADVANCED USAGE
 
 > This guide assumes Ubuntu 20.04 as host OS
 
 
-## Initial Git config
+## INITIAL GIT CONFIG
 
 ```bash
 # minimum config
@@ -32,7 +32,9 @@ git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git
 git config --list
 ```
 
-## New Git repo
+
+
+## NEW GIT REPO
 ```bash
 # Create a new repository on remote hosting (GitHub/GitLab/etc.).
 # To avoid errors, do not initialize the new repository with README, license, or gitignore files.
@@ -53,8 +55,10 @@ git push origin main
 ```
 
 
-## Remote operations
 
+## REMOTE OPERATIONS
+
+### Common Operations
 ```bash
 # show only remote URL
 git config --get remote.origin.url
@@ -74,8 +78,26 @@ git push -u <remote> --tags
 git branch --set-upstream <local_branch> <remote>/<remote_branch>
 ```
 
-## Revert changes
+### Update local workspace after main branch rename on remote
+Assuming old default branch was `main` and new one is `v1`
 
+```bash
+git branch -m main v1
+git fetch origin
+git branch -u origin/v1 v1
+git remote set-head origin -a 
+```
+
+
+## HISTORY OPERATIONS
+
+### Find Common Ancestor
+```bash
+# run from the branch in question
+git merge-base HEAD <branch_to_compare>
+```
+
+### Revert Changes
 ```bash
 # revert the workspace to the last commit
 git reset --hard HEAD
@@ -90,9 +112,7 @@ git commit -m "Reverting to the state at commit <some_commit>"
 git push -f
 ```
 
-
-## Merge branches with unrelated history
-
+### Merge Branches With Unrelated History
 ```bash
 git pull <unrelated_branch> --allow-unrelated-histories
 # this may result in the merge conflicts; resolve them, commit and push to update remote
@@ -100,7 +120,8 @@ git push origin <your_branch>
 ```
 
 
-## Tags operations
+
+## TAGS OPERATIONS
 
 ```bash
 # pull latest tags
@@ -132,7 +153,9 @@ git diff tag1 tag2 -- some/file/name
 ```
 
 
-## Find Bad Commit With Git Bisect
+## DEBUGGING OPERATIONS
+
+### Find Bad Commit With Git Bisect
 > Git Bisect is a powerful tool in Git that helps you identify the specific commit that introduced a bug or an issue in your codebase. It uses a binary search algorithm to efficiently narrow down the range of commits to find the problematic one.
 
 > To start using Git Bisect, you need to provide two pieces of information:
@@ -171,18 +194,8 @@ git bisect run <script>
 ```
 
 
-## Update Local Workspace After Main Branch Rename On Remote
-Assuming old default branch was `main` and new one is `v1`
 
-```bash
-git branch -m main v1
-git fetch origin
-git branch -u origin/v1 v1
-git remote set-head origin -a 
-```
-
-
-## Submodules
+## SUBMODULES
 A Git repository may include reference to another repository using [Git Submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
 
 ```bash
@@ -204,7 +217,6 @@ git update-index --cacheinfo 160000,<commit_sha>,<submodule_repo_dir_name>
 
 > NOTE: Visual Studio Code manages index update automatically.
 
-
 ### Troubleshooting
 Regardless of the way Git index is updated (VS Code or manually), it may result in the "detached HEAD" state in the submodule repository.
 In order to merge your local changes back into the branch that submodule originally pointed to, do the following:
@@ -219,12 +231,15 @@ git branch -d tmp
 ```
 
 
-## MacOS Notes
+
+## MACOS NOTES
 
 ```bash
 # use keychain to cache Git secret (https://medium.com/codex/git-credentials-on-macos-caching-updating-and-deleting-your-git-credentials-8d22b6126533)
 git config --global credential.helper osxkeychain
 ```
 
-## Links
+
+
+## LINKS
 - [10 Secret Git Commands](https://dev.to/arpitstack/10-secret-git-commands-that-will-save-you-5-hours-every-week-1mpn)
