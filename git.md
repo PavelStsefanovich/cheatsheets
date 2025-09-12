@@ -91,6 +91,11 @@ git remote set-head origin -a
 
 ## HISTORY OPERATIONS
 
+### Show Git Graph
+```bash
+git log --graph --oneline --all
+```
+
 ### Find Common Ancestor
 ```bash
 # run from the branch in question
