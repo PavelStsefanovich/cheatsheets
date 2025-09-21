@@ -16,6 +16,13 @@ wget -qO- https://astral.sh/uv/install.sh | sh
 # Show version
 uv -V
 
+# Install shell autocompletion (bash)
+echo 'eval "$(uv generate-shell-completion bash)"' >> ~/.bashrc
+source ~/.bashrc
+# (zsh)
+echo 'eval "$(uv generate-shell-completion zsh)"' >> ~/.zshrc
+source ~/.zshrc
+
 # Update itself to the latest version
 uv self update
 ```
