@@ -124,6 +124,15 @@ git pull <unrelated_branch> --allow-unrelated-histories
 git push origin <your_branch>
 ```
 
+### Reapply Orphaned/Unreachable Commit
+```bash
+# show local reference log and find the specific commit_hash
+git reflog
+# make sure you are on the branch to where you want to apply this commit
+git checkout <your_branch>
+# apply the commit to current branch
+git cherry-pick <commit_hash>
+```
 
 
 ## TAGS OPERATIONS
