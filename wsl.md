@@ -169,11 +169,11 @@
     $distro = Get-ChildItem "HKCU:\Software\Microsoft\Windows\CurrentVersion\Lxss" -Recurse | ? { try { ($_ | Get-ItemProperty -Name DistributionName).DistributionName -eq "$distro_name" } catch {} }
     $distro_dir = ($distro | Get-ItemProperty -Name BasePath).Basepath -replace '^\W+',''
     $vhdx_path = Get-Item "$distro_dir\*.vhdx"
-    write-host "$vhdx_path  <-- use this in with diskpart.exe" -foregroundcolor green
+    write-host "$vhdx_path  <-- use this in with diskpart.exe" -foregroundcolor magenta
 
     # to get the curret size of VHD
     $distro_size = "{0:N0} MB" -f ((Get-ChildItem -Recurse -LiteralPath "$distro_dir" | Measure-Object -Property Length -sum).sum / 1Mb)
-    write "Current size: $distro_size"
+    write-host "Current size: $distro_size" -foregroundcolor magenta
 
     # start diskpart.exe utility (will prompt for admin credentials)
     diskpart
