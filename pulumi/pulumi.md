@@ -174,3 +174,33 @@ pulumi up
 ```
 
 Once `pulumi up` finishes, your stack state is stored at `s3://<your-bucket-name>/.pulumi/stacks/my-infra/dev.json`.
+
+---
+
+## 8. Typical Pulumi Monorepo Directory Layout
+
+```
+pulumi-monorepo/
+├── package.json                 # Root workspace manifest (manages packages & dependencies)
+├── tsconfig.json                # Base TypeScript configuration
+├── pnpm-workspace.yaml          # Workspace definition (if using pnpm/npm/yarn workspaces)
+├── components/                  # Reusable custom Component Resources (DRY infrastructure)
+│   ├── package.json
+│   ├── tsconfig.json
+│   └── src/
+│       ├── vpc/                 # Standardized multi-AZ VPC component
+│       │   └── index.ts
+│       └── secure-bucket/       # Encrypted S3 bucket with compliance rules
+│           └── index.ts
+└── stacks/                      # Independent deployment units (Lifecycles & Environments)
+    ├── shared-networking/       # Foundational infrastructure stack
+    │   ├── Pulumi.yaml          # Project manifest
+    │   ├── Pulumi.dev.yaml      # Stack config (dev environment)
+    │   ├── Pulumi.prod.yaml     # Stack config (prod environment)
+    │   └── index.ts             # Instantiates components/vpc
+    └── app-workloads/           # Application-tier workload stack
+        ├── Pulumi.yaml
+        ├── Pulumi.dev.yaml
+        ├── Pulumi.prod.yaml
+        └── index.ts             # Consumes outputs via StackReferences or package imports
+```
