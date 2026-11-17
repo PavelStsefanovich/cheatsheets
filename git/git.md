@@ -32,6 +32,32 @@ git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git
 git config --list
 ```
 
+### YubiKey FIDO2 SSH Authentication (Windows 11 + WSL2)
+
+An `ed25519-sk` key keeps the private key inside the YubiKey hardware (`id_ed25519_sk` on disk is only a non-secret FIDO2 key handle), and WSL2 Git can invoke Windows OpenSSH (`ssh.exe`) directly to trigger Windows 11 WebAuthn prompts without `ssh-agent`, `socat`, or `npiperelay`.
+
+```bash
+# 1. Generate the FIDO2 SSH key (from WSL2 or PowerShell)
+# With PIN + physical touch on every git operation:
+ssh-keygen.exe -t ed25519-sk -O resident -O verify-required -C "yubikey-fido2"
+
+# Or physical touch only (no PIN prompt on every git command):
+ssh-keygen.exe -t ed25519-sk -O resident -C "yubikey-fido2"
+
+# 2. Print the public key to add in GitHub (Settings -> SSH and GPG keys)
+powershell.exe -NoProfile -Command 'Get-Content "$env:USERPROFILE\.ssh\id_ed25519_sk.pub"'
+
+# 3. Point WSL2 Git to Windows OpenSSH (native WebAuthn YubiKey prompt)
+git config --global core.sshCommand "ssh.exe"
+
+# 4. Test GitHub SSH authentication
+ssh.exe -T git@github.com
+
+# 5. Retire any temporary pre-YubiKey SSH key in WSL2 (also delete it from GitHub)
+shred -u ~/.ssh/id_ed25519_temp* 2>/dev/null || rm -f ~/.ssh/id_ed25519_temp*
+ssh-add -D 2>/dev/null || true
+```
+
 
 
 ## NEW GIT REPO
