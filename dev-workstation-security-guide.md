@@ -101,10 +101,10 @@ This guide establishes a workstation security workflow that allows you to work p
 ### E. VS Code (GitHub)
 
 #### Today (Pre-YubiKey)
-- Even when connected to a WSL2 workspace via the Remote-WSL extension, VS Code's UI and GitHub authentication provider run on the **Windows 11 host** and store OAuth tokens inside **Windows Credential Manager** (`SecretStorage`).
+- Even when connected to a WSL2 workspace via the Remote-WSL extension, VS Code's UI and GitHub authentication provider run on the **Windows 11 host** and store `SecretStorage` OAuth tokens inside `%APPDATA%\Code\User\globalStorage\state.vscdb` (encrypted via Windows DPAPI) rather than `cmdkey.exe`.
 - At the end of the day:
-  1. Close VS Code (if left open, tokens can remain resident in process memory).
-  2. Sign out via **Accounts (bottom-left Activity Bar) → GitHub → Sign Out**, or let the teardown script purge matching entries from Windows Credential Manager using `cmdkey.exe`.
+  1. Sign out via **Accounts (bottom-left Activity Bar) → GitHub → Sign Out**, and close VS Code (if left open, tokens remain resident in process memory and overwrite `state.vscdb` on exit).
+  2. Or close VS Code and let the teardown script purge `secret://%` entries from `state.vscdb`.
 
 #### When the YubiKey Arrives
 - Register the YubiKey as a **WebAuthn Security Key / Passkey** on your GitHub account. Signing back into VS Code will prompt Windows 11 for a YubiKey touch.
@@ -119,7 +119,7 @@ This guide establishes a workstation security workflow that allows you to work p
    - **VS Code / Antigravity IDE Extension:** Reserves `/` strictly for agent workflow and prompt commands (`/plan`, `/goal`, `/compact`, `/schedule`, `/browser`, `/grill-me`, `/teamwork`, `/learn`, `/boost`). Application-level sign-out lives in the IDE's graphical **Accounts** menu / Command Palette (`Ctrl+Shift+P`).
 2. **Credential Storage Split (WSL2 vs. Windows 11):**
    - `agy` CLI stores its OAuth token directly inside WSL2 (`~/.gemini/antigravity-cli/antigravity-oauth-token`), which `/logout` removes.
-   - The VS Code / IDE extension runs on the Windows 11 host and stores credentials in Windows Credential Manager via OS keyring / `SecretStorage`.
+   - The VS Code / Antigravity IDE extension runs on the Windows 11 host and stores `SecretStorage` OAuth tokens inside `%APPDATA%\<App>\User\globalStorage\state.vscdb` (encrypted via Windows DPAPI) rather than `cmdkey.exe`.
 
 #### Today (Pre-YubiKey) & With YubiKey
 - **Today:** Authenticate with your Google Account (with 2-Step Verification enabled). Run `/logout` in `agy` before closing, or let the unified teardown script wipe `~/.gemini/antigravity-cli/antigravity-oauth-token` and any host credential entries.
@@ -194,18 +194,22 @@ if [ -d "$HOME/workshop" ]; then
     log "✓ Purged local Terragrunt/OpenTofu caches, plan files, and state artifacts"
 fi
 
-# 7. Clear Windows Credential Manager entries for GitHub, VS Code, Antigravity, and Gemini via WSL interop
-if command -v cmdkey.exe >/dev/null 2>&1; then
-    cmdkey.exe /list | grep -iE "Target:.*(github|vscode|antigravity|gemini)" | sed 's/.*Target: //;s/\r//' | while read -r target; do
-        cmdkey.exe /delete:"$target" >/dev/null 2>&1 || true
-        log "✓ Removed Windows credential: $target"
+# 7. Clear VS Code and Antigravity SecretStorage tokens in Windows state.vscdb (requires IDE to be closed)
+if command -v cmd.exe >/dev/null 2>&1 && command -v python3 >/dev/null 2>&1; then
+    WIN_APPDATA="$(wslpath "$(cmd.exe /c "echo %APPDATA%" 2>/dev/null | tr -d '\r')")"
+    for app in "Code" "Antigravity"; do
+        db="$WIN_APPDATA/$app/User/globalStorage/state.vscdb"
+        if [ -f "$db" ]; then
+            python3 -c 'import sqlite3, sys; conn = sqlite3.connect(sys.argv[1]); conn.execute("DELETE FROM ItemTable WHERE key LIKE \"secret://%\""); conn.commit(); conn.close()' "$db" 2>/dev/null || true
+            log "✓ Cleared $app SecretStorage tokens from state.vscdb"
+        fi
     done
 fi
 
-log "✅ Lockdown complete. Close VS Code if open; all tools will require re-authentication on next start."
+log "✅ Lockdown complete. Close VS Code/Antigravity if open; all tools will require re-authentication on next start."
 ```
 
-> **Note:** Run `cmdkey.exe /list` in WSL2 once while signed into VS Code and extensions to verify the exact target names stored by your Windows host, and adjust the `grep -iE` pattern in Step 7 if needed.
+> **Note:** Always close VS Code / Antigravity before running `eod` (or sign out first via **Accounts → Sign Out**), because an open IDE window holds active tokens in memory and overwrites `state.vscdb` on exit.
 
 ### Step 2: Update `~/.bashrc`
 
