@@ -51,6 +51,7 @@ Repository: [https://github.com/anthropics/skills/tree/main/skills](https://gith
 | **Netresearch Agent Rules** | [https://github.com/netresearch/agent-rules-skill](https://github.com/netresearch/agent-rules-skill) | Meta-skill that generates a concise, stack-specific `AGENTS.md` from `package.json`, `pyproject.toml`, `go.mod`, etc. |
 | **Awesome Agent Skills** | [https://github.com/VoltAgent/awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills) | Curated catalog of 1,000+ vendor and community `SKILL.md` skills. Use as a menu to cherry-pick 1–2 skills per project. |
 | **AgenticSkills** | [https://agenticskills.io/](https://agenticskills.io/) | Find AI Agent Skills worth installing. |
+| **skills.sh** | [https://www.skills.sh/](https://www.skills.sh/) | Open Agent Skills directory & ecosystem (paired with the Vercel Labs `skills` CLI). |
 
 ---
 
